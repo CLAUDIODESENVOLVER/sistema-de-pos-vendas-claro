@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Pós Vendas - Claro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000000 0%, #1a0000 50%, #2a0000 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .neon-red {
+            border: 2px solid #ff003c;
+            box-shadow: 0 0 10px #ff003c, 0 0 20px #ff003c, 0 0 40px #ff003c;
+            animation: neon-red-pulse 2s infinite alternate;
+        }
+
+        .neon-blue {
+            border: 2px solid #00f3ff;
+            box-shadow: 0 0 10px #00f3ff, 0 0 20px #00f3ff;
+        }
+
+        .neon-text-red {
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff003c, 0 0 20px #ff003c;
+        }
+
+        .neon-text-blue {
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #00f3ff, 0 0 20px #00f3ff;
+        }
+
+        .claro-gradient {
+            background: linear-gradient(135deg, #e30613 0%, #ff003c 50%, #e30613 100%);
+        }
+
+        .btn-neon-red {
+            background: linear-gradient(45deg, #ff003c, #e30613);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 0, 60, 0.4);
+        }
+
+        .btn-neon-red:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(255, 0, 60, 0.8);
+        }
+
+        .btn-neon-blue {
+            background: linear-gradient(45deg, #00f3ff, #0099ff);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+        }
+
+        .btn-neon-blue:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.8);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #ff4757, #e30613);
+            box-shadow: 0 0 15px rgba(230, 6, 19, 0.4);
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 0 25px rgba(230, 6, 19, 0.8);
+        }
+
+        @keyframes neon-red-pulse {
+            from {
+                box-shadow: 0 0 10px #ff003c, 0 0 20px #ff003c;
+            }
+            to {
+                box-shadow: 0 0 15px #ff003c, 0 0 30px #ff003c, 0 0 40px #ff003c;
+            }
+        }
+
+        @keyframes neon-blue-pulse {
+            from {
+                box-shadow: 0 0 10px #00f3ff, 0 0 20px #00f3ff;
+            }
+            to {
+                box-shadow: 0 0 15px #00f3ff, 0 0 30px #00f3ff, 0 0 40px #00f3ff;
+            }
+        }
+
+        .glass-effect {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 0, 60, 0.3);
+        }
+
+        .sales-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid #ff003c;
+        }
+
+        .sales-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 0, 60, 0.3);
+        }
+
+        .urgent {
+            border-left: 4px solid #ff4757;
+            animation: urgent-pulse 1s infinite alternate;
+        }
+
+        .login-input {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ff003c;
+            color: white;
+            border-radius: 8px;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .login-input:focus {
+            box-shadow: 0 0 15px rgba(255, 0, 60, 0.5);
+            border-color: #ff003c;
+        }
+
+        @keyframes urgent-pulse {
+            from { opacity: 1; }
+            to { opacity: 0.7; }
+        }
+
+        .user-badge {
+            background: linear-gradient(45deg, #ff003c, #e30613);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="container mx-auto max-w-6xl">
+        <!-- Header com Logo -->
+        <div class="text-center mb-8">
+            <div class="neon-red rounded-full p-2 inline-block mb-4">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7f270682-7bbd-478e-9773-922a0350b314.png" alt="Logo Claro - Empresa de telecomunicações com design moderno em vermelho e branco" class="w-24 h-24 rounded-full">
+            </div>
+            <h1 class="text-4xl font-bold neon-text-red mb-2">Sistema de Pós Vendas Claro</h1>
+        </div>
+
+        <!-- Sistema de Login -->
+        <div id="loginSection" class="glass-effect p-8 rounded-xl mb-8 neon-red">
+            <h2 class="text-2xl font-semibold mb-6 text-center neon-text-red">Acesso ao Sistema</h2>
+            
+            <form id="loginForm" class="max-w-md mx-auto">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2 text-red-200">Email</label>
+                    <input type="email" id="loginEmail" required 
+                           class="login-input w-full" placeholder="seu.email@claro.com">
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2 text-red-200">Senha</label>
+                    <input type="password" id="loginPassword" required 
+                           class="login-input w-full" placeholder="Sua senha">
+                </div>
+
+                <button type="submit" class="btn-neon-red w-full">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Entrar
+                </button>
+            </form>
+        </div>
+
+        <!-- Dashboard Principal (Oculto inicialmente) -->
+        <div id="dashboard" class="hidden">
+            <!-- Header do Dashboard -->
+            <div class="glass-effect p-6 mb-8 flex justify-between items-center neon-red">
+                <div>
+                    <h2 class="text-2xl font-semibold neon-text-red">Bem-vindo, <span id="userName"></span></h2>
+                    <p class="text-red-200" id="userRole"></p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span id="userBadge" class="user-badge"></span>
+                    <button onclick="logout()" class="btn-neon-red">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Sair
+                    </button>
+                </div>
+            </div>
+
+            <!-- Formulário de Vendas -->
+            <div id="salesFormSection" class="glass-effect p-6 mb-8 neon-red">
+                <h3 class="text-xl font-semibold mb-4 neon-text-red"><i class="fas fa-plus-circle mr-2"></i>Nova Venda</h3>
+                <form id="saleForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-red-200">Cliente</label>
+                        <input type="text" id="clientName" required 
+                               class="login-input w-full" placeholder="Nome completo">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-red-200">Telefone</label>
+                        <input type="tel" id="clientPhone" required 
+                               class="login-input w-full" placeholder="(11) 99999-9999">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-red-200">Email do Cliente</label>
+                        <input type="email" id="clientEmail" 
+                               class="login-input w-full" placeholder="cliente@email.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-red-200">Produto</label>
+                        <select id="productType" required class="login-input w-full">
+                            <option value="">Selecione...</option>
+                            <option value="pos-pago">Plano Pós-pago</option>
+                            <option value="tv-box">Controle TV Box</option>
+                            <option value="celular">Aparelho Celular</option>
+                            <option value="combo">Combo Completo</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-red-200">Plano/Modelo</label>
+                        <input type="text" id="productModel" required 
+                               class="login-input w-full" placeholder="Ex: Plano 100GB, iPhone 15">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-red-200">Valor</label>
+                        <input type="number" id="saleValue" step="0.01" required 
+                               class="login-input w-full" placeholder="R$ 0,00">
+                    </div>
+                    <div class="md:col-span-3">
+                        <label class="block text-sm font-medium mb-2 text-red-200">Observações</label>
+                        <textarea id="saleNotes" class="login-input w-full h-20" placeholder="Observações da venda..."></textarea>
+                    </div>
+                    <div class="md:col-span-3">
+                        <button type="submit" class="btn-neon-red w-full">
+                            <i class="fas fa-check mr-2"></i>Registrar Venda
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Histórico de Vendas -->
+            <div class="glass-effect p-6 mb-8 neon-blue">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-semibold neon-text-blue"><i class="fas fa-history mr-2"></i>Histórico de Vendas</h3>
+                    <div class="flex gap-2">
+                        <input type="text" id="searchSales" placeholder="Buscar vendas..." 
+                               class="login-input w-48" style="border-color: #00f3ff">
+                        <button onclick="filterSales()" class="btn-neon-blue">
+                            <i class="fas fa-search mr-2"></i>Buscar
+                        </button>
+                    </div>
+                </div>
+
+                <div id="salesList" class="space-y-4">
+                    <!-- Vendas serão carregadas aqui -->
+                </div>
+
+                <!-- Controles de Admin -->
+                <div id="adminControls" class="mt-6 pt-6 border-t border-red-500 hidden">
+                    <h4 class="text-lg font-semibold mb-4 neon-text-red"><i class="fas fa-cog mr-2"></i>Controles Administrativos</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button onclick="exportSales()" class="btn-neon-blue">
+                            <i class="fas fa-download mr-2"></i>Exportar Vendas
+                        </button>
+                        <button onclick="clearAllSales()" class="btn-danger">
+                            <i class="fas fa-trash mr-2"></i>Limpar Todas as Vendas
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teste de Mensagens Twilio -->
+            <div class="glass-effect p-6 neon-blue">
+                <h3 class="text-xl font-semibold mb-4 neon-text-blue"><i class="fas fa-comment-alt mr-2"></i>Teste de Mensagens Twilio</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-blue-200">Número para teste</label>
+                        <input type="tel" id="testPhone" class="login-input w-full" placeholder="+5511999999999" style="border-color: #00f3ff">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-blue-200">Mensagem</label>
+                        <input type="text" id="testMessage" class="login-input w-full" placeholder="Sua mensagem de teste..." style="border-color: #00f3ff">
+                    </div>
+                </div>
+                <button onclick="testTwilioMessage()" class="btn-neon-blue w-full">
+                    <i class="fas fa-paper-plane mr-2"></i>Enviar Mensagem de Teste
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados dos usuários
+        const users = {
+            'fabiana@claro.com': { password: 'senha123', name: 'Fabiana', role: 'Vendedora' },
+            'joao@claro.com': { password: 'senha123', name: 'João', role: 'Vendedor' },
+            'claudio@claro.com': { password: 'senha123', name: 'Claudio', role: 'Vendedor' },
+            'admin@claro.com': { password: 'admin123', name: 'Administrador', role: 'Admin' }
+        };
+
+        let currentUser = null;
+        let sales = JSON.parse(localStorage.getItem('claro_sales')) || [];
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (users[email] && users[email].password === password) {
+                currentUser = users[email];
+                currentUser.email = email;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showDashboard();
+            } else {
+                alert('Email ou senha incorretos!');
+            }
+        });
+
+        // Logout
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('loginForm').reset();
+        }
+
+        // Mostrar dashboard
+        function showDashboard() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userRole').textContent = currentUser.role;
+            document.getElementById('userBadge').textContent = currentUser.role;
+
+            // Mostrar/ocultar controles de admin
+            if (currentUser.role === 'Admin') {
+                document.getElementById('adminControls').classList.remove('hidden');
+            } else {
+                document.getElementById('adminControls').classList.add('hidden');
+            }
+
+            loadSales();
+        }
+
+        // Registrar venda
+        document.getElementById('saleForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const sale = {
+                id: Date.now(),
+                clientName: document.getElementById('clientName').value,
+                clientPhone: document.getElementById('clientPhone').value,
+                clientEmail: document.getElementById('clientEmail').value,
+                productType: document.getElementById('productType').value,
+                productModel: document.getElementById('productModel').value,
+                saleValue: parseFloat(document.getElementById('saleValue').value),
+                saleNotes: document.getElementById('saleNotes').value,
+                seller: currentUser.name,
+                sellerEmail: currentUser.email,
+                date: new Date().toISOString(),
+                status: 'ativa'
+            };
+
+            sales.push(sale);
+            localStorage.setItem('claro_sales', JSON.stringify(sales));
+            
+            alert('Venda registrada com sucesso!');
+            this.reset();
+            loadSales();
+        });
+
+        // Carregar vendas
+        function loadSales() {
+            const salesList = document.getElementById('salesList');
+            salesList.innerHTML = '';
+
+            sales.forEach(sale => {
+                const saleDate = new Date(sale.date);
+                const daysDiff = Math.floor((new Date() - saleDate) / (1000 * 60 * 60 * 24));
+                
+                const saleCard = document.createElement('div');
+                saleCard.className = `sales-card glass-effect p-4 ${daysDiff >= 3 ? 'urgent' : ''}`;
+                saleCard.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h4 class="font-semibold">${sale.clientName}</h4>
+                            <p class="text-sm text-red-300">${sale.clientPhone}</p>
+                        </div>
+                        <span class="user-badge">${sale.seller}</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 mb-2">
+                        <div>
+                            <span class="text-xs text-gray-400">Produto:</span>
+                            <p>${sale.productType} - ${sale.productModel}</p>
+                        </div>
+                        <div>
+                            <span class="text-xs text-gray-400">Valor:</span>
+                            <p class="text-green-400">R$ ${sale.saleValue.toFixed(2)}</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-gray-400">${saleDate.toLocaleDateString()} - ${daysDiff} dias</span>
+                        ${currentUser.role === 'Admin' ? `
+                            <button onclick="deleteSale(${sale.id})" class="text-red-400 hover:text-red-200">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        ` : ''}
+                    </div>
+                    ${daysDiff >= 3 ? `
+                        <div class="mt-2 p-2 bg-red-900 rounded text-center">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            Necessário pós-venda (${daysDiff} dias)
+                        </div>
+                    ` : ''}
+                `;
+                salesList.appendChild(saleCard);
+            });
+        }
+
+        // Deletar venda (apenas admin)
+        function deleteSale(id) {
+            if (confirm('Tem certeza que deseja excluir esta venda?')) {
+                sales = sales.filter(sale => sale.id !== id);
+                localStorage.setItem('claro_sales', JSON.stringify(sales));
+                loadSales();
+            }
+        }
+
+        // Limpar todas as vendas
+        function clearAllSales() {
+            if (confirm('Tem certeza que deseja excluir TODAS as vendas? Esta ação não pode ser desfeita!')) {
+                sales = [];
+                localStorage.setItem('claro_sales', JSON.stringify(sales));
+                loadSales();
+            }
+        }
+
+        // Exportar vendas
+        function exportSales() {
+            const csv = sales.map(sale => 
+                `${sale.date},${sale.clientName},${sale.clientPhone},${sale.productType},${sale.productModel},${sale.saleValue},${sale.seller}`
+            ).join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'vendas_claro.csv';
+            a.click();
+        }
+
+        // Teste de mensagem Twilio
+        function testTwilioMessage() {
+            const phone = document.getElementById('testPhone').value;
+            const message = document.getElementById('testMessage').value;
+            
+            if (!phone || !message) {
+                alert('Preencha todos os campos para testar a mensagem!');
+                return;
+            }
+
+            // Simulação de envio para Twilio
+            alert(`Mensagem enviada para ${phone}:\n\n"${message}"\n\n(Simulação - integração com Twilio necessária)`);
+        }
+
+        // Filtro de vendas
+        function filterSales() {
+            const searchTerm = document.getElementById('searchSales').value.toLowerCase();
+            const filteredSales = sales.filter(sale => 
+                sale.clientName.toLowerCase().includes(searchTerm) ||
+                sale.clientPhone.includes(searchTerm) ||
+                sale.productModel.toLowerCase().includes(searchTerm)
+            );
+            
+            const salesList = document.getElementById('salesList');
+            salesList.innerHTML = '';
+
+            filteredSales.forEach(sale => {
+                const saleDate = new Date(sale.date);
+                const daysDiff = Math.floor((new Date() - saleDate) / (1000 * 60 * 60 * 24));
+                
+                const saleCard = document.createElement('div');
+                saleCard.className = `sales-card glass-effect p-4 ${daysDiff >= 3 ? 'urgent' : ''}`;
+                saleCard.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h4 class="font-semibold">${sale.clientName}</h4>
+                            <p class="text-sm text-red-300">${sale.clientPhone}</p>
+                        </div>
+                        <span class="user-badge">${sale.seller}</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 mb-2">
+                        <div>
+                            <span class="text-xs text-gray-400">Produto:</span>
+                            <p>${sale.productType} - ${sale.productModel}</p>
+                        </div>
+                        <div>
+                            <span class="text-xs text-gray-400">Valor:</span>
+                            <p class="text-green-400">R$ ${sale.saleValue.toFixed(2)}</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-gray-400">${saleDate.toLocaleDateString()} - ${daysDiff} dias</span>
+                        ${currentUser.role === 'Admin' ? `
+                            <button onclick="deleteSale(${sale.id})" class="text-red-400 hover:text-red-200">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        ` : ''}
+                    </div>
+                `;
+                salesList.appendChild(saleCard);
+            });
+        }
+
+        // Verificar se usuário está logado ao carregar a página
+        window.addEventListener('load', function() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showDashboard();
+            }
+        });
+    </script>
+</body>
+</html>
